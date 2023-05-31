@@ -18,11 +18,17 @@ def main():
     execute_from_command_line(sys.argv)
     from checker.utils import GHParser
     import time
-    # TOKEN = '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'
-    # while True:
-    #     GHParser.parse(TOKEN)
-    #     time.sleep(1)
 
+    # Put here your token
+    TOKEN = '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'
+
+    # Change this if you want to parse faster/slower
+    # However, do not forget about GitHub requests' limitation
+    AMOUNT_OF_REQUEST_PER_MINUT = 5
+
+    while True:
+        GHParser.parse(TOKEN)
+        time.sleep(60 // AMOUNT_OF_REQUEST_PER_MINUT)
 
 
 if __name__ == '__main__':

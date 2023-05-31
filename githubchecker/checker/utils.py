@@ -52,18 +52,24 @@ class GHParser:
         data = json.loads(response.text)
         new_datetime = None
         for event in data:
-
             try:
                 event_type: EventTypes = EventTypes(event['type'])
             except ValueError:
                 # Event that we do not want to collect information about
                 # For example: `PushEvent`
                 continue
+            except TypeError:
+                """
+                Crossed the limit of possible requests
+                For fixing this problem check 
+                https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting
+                """
+                raise ConnectionError("We've crossed the limit of possible messages.\nUser access token requests are li"
+                                      "mited to 5,000 requests per hour and per authenticated user. ")
 
             repo_id = event['repo']['id']
             repo_name = event['repo']['name']
             event_datetime = event['created_at']
-            print(f'Type = {event_type}; repo_id = {repo_id}; repo_name = {repo_name}')
 
             if new_datetime is None:
                 new_datetime = event_datetime
