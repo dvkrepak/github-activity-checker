@@ -1,5 +1,10 @@
 from enum import Enum
-from .models import PullRequestMetrics
+
+import django.db.utils
+
+from .models import PullRequestMetrics, Repository, Event
+from django.db.models import Avg
+from django.utils import timezone
 
 import requests
 import json
@@ -13,12 +18,13 @@ class EventTypes(Enum):
 
 class GHParser:
 
-    def __init__(self):
-        self.last_parsed_time = None
+    last_parsed_datetime = None
 
     @staticmethod
     def __calculate_average_pull_request(repository_name: str):
-        average_time = 0
+        repository = Repository.objects.get(name=repository_name)
+        pull_requests = repository.events.filter(event_type=Event.PULL_REQUEST_EVENT)
+        average_time = pull_requests.aggregate(avg_time=Avg('created_at'))['avg_time']
 
         data = {
             'repository_name': repository_name,
@@ -42,9 +48,9 @@ class GHParser:
 
     @staticmethod
     def parse(token: str):
-        #  TODO: Parse until last time < time of parse start
         response = requests.get('https://api.github.com/events', headers={'Authorization': token})
         data = json.loads(response.text)
+        new_datetime = None
         for event in data:
 
             try:
@@ -56,10 +62,23 @@ class GHParser:
 
             repo_id = event['repo']['id']
             repo_name = event['repo']['name']
+            event_datetime = event['created_at']
             print(f'Type = {event_type}; repo_id = {repo_id}; repo_name = {repo_name}')
 
+            if new_datetime is None:
+                new_datetime = event_datetime
 
-if __name__ == '__main__':
-    TOKEN = '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'
-    GHParser.parse(TOKEN)
-    GHParser.calculate_average_request_time("", 'WatchEvent')
+            if GHParser.last_parsed_datetime is not None and event_datetime <= GHParser.last_parsed_datetime:
+                break
+
+            event_instance = Event.objects.create(
+                event_type=event_type.name,
+                created_at=timezone.now()
+            )
+            event_instance.save()
+
+            repository, _ = Repository.objects.get_or_create(repo_id=repo_id, defaults={'name': repo_name})
+            repository.events = event_instance
+            repository.save()
+
+        GHParser.last_parsed_datetime = new_datetime

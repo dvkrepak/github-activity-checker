@@ -8,7 +8,7 @@ class RepositoryAdmin(admin.ModelAdmin):
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id', 'event_type', 'repository_id', 'created_at', )
+    list_display = ('id', 'event_type', 'created_at', )
 
 
 class PullRequestMetricsAdmin(admin.ModelAdmin):

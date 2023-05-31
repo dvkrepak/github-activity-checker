@@ -32,7 +32,6 @@ class Event(models.Model):
         choices=EVENT_CHOICES,
     )
 
-    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
