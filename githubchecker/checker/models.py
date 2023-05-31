@@ -35,7 +35,31 @@ class Event(models.Model):
     repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.event_type} in repository n.{self.repository_id}'
 
-class PullRequestMetrics(models.Model):
-    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, null=False)
-    respond = models.FloatField(default=0)
+    class Meta:
+        verbose_name = 'Event'
+        verbose_name_plural = 'Events'
+
+
+class BasicMetrics(models.Model):
+    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, null=False, default=None)
+
+    def __str__(self):
+        return 'Basic metric'
+
+    class Meta:
+        verbose_name = 'Basic Metric'
+        verbose_name_plural = 'Basic Metrics'
+
+
+class PullRequestMetrics(BasicMetrics):
+    respond = models.FloatField(default=None)
+
+    def __str__(self):
+        return f'Pull request metric about repo n.{self.repository_id} = {self.respond}'
+
+    class Meta:
+        verbose_name = 'Pull Request Metric'
+        verbose_name_plural = 'Pull Request Metrics'

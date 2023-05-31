@@ -17,7 +17,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ('pk', 'event_type', 'repository_id', 'created_at', )
 
 
-class PullRequestMetricsSerializer(serializers.ModelSerializer):
+class MetricsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PullRequestMetrics

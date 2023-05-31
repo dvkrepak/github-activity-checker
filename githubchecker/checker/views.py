@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from .models import Repository, PullRequestMetrics
-from .serializers import RepositorySerializer, PullRequestMetricsSerializer
+from .serializers import RepositorySerializer, MetricsSerializer
 
 
 class RepositoryAPIView(generics.ListAPIView):
@@ -14,7 +14,10 @@ class RepositoryDetailAPIView(generics.RetrieveAPIView):
     queryset = Repository.objects.filter()
 
 
-class PullRequestMetricsAPIView(generics.RetrieveAPIView):
-    serializer_class = PullRequestMetricsSerializer
-    queryset = PullRequestMetrics.objects.filter()
+class MetricsAPIView(generics.RetrieveAPIView):
+    serializer_class = MetricsSerializer
     lookup_field = 'repository_id'
+
+
+class PullRequestMetricsAPIView(MetricsAPIView):
+    queryset = PullRequestMetrics.objects.filter()
