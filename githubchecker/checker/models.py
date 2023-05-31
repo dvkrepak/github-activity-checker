@@ -2,7 +2,9 @@ from django.db import models
 
 
 class Repository(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default=None)
+    repo_id = models.BigIntegerField(unique=True, default=None)
+    events = models.ForeignKey('Event', on_delete=models.PROTECT, default=None)
 
     def __str__(self):
         return self.name
@@ -30,5 +32,10 @@ class Event(models.Model):
         choices=EVENT_CHOICES,
     )
 
-    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT)
+    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class PullRequestMetrics(models.Model):
+    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, null=False)
+    respond = models.FloatField(default=0)

@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import RepositoryAPIView, RepositoryDetailAPIView
+from .views import PullRequestMetricsAPIView
 
 
 urlpatterns = [
-    path('stats/', RepositoryAPIView.as_view()),
-    path('stats/<str:name>', RepositoryDetailAPIView.as_view()),
+    path('metrics/pull-request/<int:repository_id>', PullRequestMetricsAPIView.as_view()),
 ]
