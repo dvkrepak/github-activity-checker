@@ -14,7 +14,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('pk', 'event_type', 'repository_id', 'created_at', )
+        fields = ('pk', 'event_type', 'created_at', )
 
 
 class MetricsSerializer(serializers.ModelSerializer):

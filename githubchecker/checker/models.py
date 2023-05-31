@@ -27,15 +27,11 @@ class Event(models.Model):
         (ISSUES_EVENT, 'IssuesEvent')
     ]
 
-    event_type = models.CharField(
-        max_length=20,
-        choices=EVENT_CHOICES,
-    )
-
+    event_type = models.CharField(max_length=20, choices=EVENT_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.event_type} in repository n.{self.repository_id}'
+        return f'{self.event_type} at {self.created_at}'
 
     class Meta:
         verbose_name = 'Event'

@@ -18,10 +18,10 @@ def main():
     execute_from_command_line(sys.argv)
     from checker.utils import GHParser
     import time
-    TOKEN = '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'
-    while True:
-        GHParser.parse(TOKEN)
-        time.sleep(1)
+    # TOKEN = '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'
+    # while True:
+    #     GHParser.parse(TOKEN)
+    #     time.sleep(1)
 
 
 
