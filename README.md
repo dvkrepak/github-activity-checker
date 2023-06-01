@@ -1,4 +1,4 @@
-<img align="right" src="https://i.imgur.com/EkmzUIf.png" alt="GitHub Logo" width="600" height="300">
+<img align="right" src="https://i.imgur.com/EkmzUIf.png" alt="GitHub Logo" width="400" height="200">
 
 ## **GitHub analyzer**
 This is a GitHub Analyzer project developed by **<u> Denis Krepak</u>**.
