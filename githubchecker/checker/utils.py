@@ -1,8 +1,9 @@
+import datetime
 from enum import Enum
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from .models import PullRequestMetrics, Repository, Event, EventType
-from django.db.models import Func, FloatField, DateTimeField
+from django.db.models import Func, FloatField, DateTimeField, Count
 from django.utils import timezone
 
 import requests
@@ -15,18 +16,7 @@ class EventTypes(Enum):
     IssuesEvent = 'IssuesEvent'
 
 
-class Epoch(Func):
-    template = 'EXTRACT(epoch FROM %(expressions)s)::FLOAT'
-    output_field = FloatField()
-
-
-class DateTimeFromFloat(Func):
-    template = 'To_TIMESTAMP(%(expressions)s)::TIMESTAMP at time zone \'UTC\''
-    output_field = DateTimeField()
-
-
 class GHParser:
-
     last_parsed_datetime = None
 
     @staticmethod
@@ -39,11 +29,12 @@ class GHParser:
             return 'No existing `repository`'
         except Event.DoesNotExist:
             return 'No existing `event`'
-        except EventTypes.DoesNotExist:
+        except EventType.DoesNotExist:
             return 'No existing event type in database for `PullRequestEvent`'
 
         if len(events) < 2:
-            return 0  # Difference between one / zero datetimes is zero
+            PullRequestMetrics.objects.create(gh_repo_id=repository, respond='0').save()
+            return 0  # Difference between one(1)/zero(0) datetime(-s) is zero(0)
 
         total_difference = timedelta()
         for index in range(1, len(events)):
@@ -57,6 +48,8 @@ class GHParser:
         minutes, seconds = divmod(remainder, 60)
 
         average_difference_str = f"{days} days, {hours:02}:{minutes:02}:{seconds:02}"
+        PullRequestMetrics.objects.create(gh_repo_id=repository, respond=average_difference_str).save()
+
         return average_difference_str
 
     @staticmethod
@@ -70,6 +63,26 @@ class GHParser:
             raise TypeError(f'Cannot calculate {parse_type} yet')
 
         raise TypeError(f'Incorrect parse type `{parse_type}` for time request')
+
+    @staticmethod
+    def __dict_merge(array_of_dicts):
+        merged = {}
+        for dictionary in array_of_dicts:
+            event_type = dictionary['event_type__event_type']
+            count = dictionary['count']
+            merged[event_type] = count
+        return merged
+
+    @staticmethod
+    def get_number_of_events_groupped(offset):
+        # Offset is int representation of minute(-s) - `offset === 1 === True` means 1 minute
+        current_time = datetime.now()
+        time_threshold = current_time - timedelta(minutes=offset)
+
+        events = Event.objects.filter(created_at__lte=current_time, created_at__gte=time_threshold)
+        event_counts = events.values('event_type__event_type').annotate(count=Count('event_type'))
+
+        return GHParser.__dict_merge(event_counts)
 
     @staticmethod
     def parse(token: str):

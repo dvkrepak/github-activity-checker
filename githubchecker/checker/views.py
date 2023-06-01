@@ -24,3 +24,8 @@ def pull_request_metrics(request, repo: int):
         'average_time': average_time
     }
     return JsonResponse(response_data)
+
+
+def events_metrics(request, offset: int):
+    response_data = GHParser.get_number_of_events_groupped(offset)
+    return JsonResponse(response_data)
