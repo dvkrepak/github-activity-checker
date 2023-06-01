@@ -102,8 +102,8 @@ class GHParser:
             if GHParser.last_parsed_datetime is not None and event_datetime <= GHParser.last_parsed_datetime:
                 break
 
-            repository, _ = Repository.objects.get_or_create(repo_id=repo_id, defaults={'name': repo_name})
-            event_type_instance, _ = Event.objects.get_or_create(event_type=event_type)
+            repository, _ = Repository.objects.get_or_create(gh_repo_id=repo_id, defaults={'name': repo_name})
+            event_type_instance, _ = EventType.objects.get_or_create(event_type=event_type.name)
 
             event_instance = Event.objects.create(
                 event_type=event_type_instance,

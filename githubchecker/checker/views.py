@@ -19,7 +19,6 @@ class RepositoryDetailAPIView(generics.RetrieveAPIView):
 
 def pull_request_metrics(request, repo: int):
     average_time = GHParser.calculate_average_request_time(repo, 'PullRequestEvent')
-    # serialized_average_time = serializers.serialize('json', average_time)
     response_data = {
         'github_repository_id': repo,
         'average_time': average_time
