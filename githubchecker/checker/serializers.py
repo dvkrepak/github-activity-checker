@@ -21,4 +21,4 @@ class MetricsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PullRequestMetrics
-        fields = ('respond', )
+        fields = ('id', 'respond', )

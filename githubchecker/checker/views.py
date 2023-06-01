@@ -2,6 +2,7 @@ from rest_framework import generics
 
 from .models import Repository, PullRequestMetrics
 from .serializers import RepositorySerializer, MetricsSerializer
+from .utils import GHParser
 
 
 class RepositoryAPIView(generics.ListAPIView):
@@ -16,8 +17,11 @@ class RepositoryDetailAPIView(generics.RetrieveAPIView):
 
 class MetricsAPIView(generics.RetrieveAPIView):
     serializer_class = MetricsSerializer
-    lookup_field = 'repository_id'
+    lookup_field = 'repo_id'
 
 
 class PullRequestMetricsAPIView(MetricsAPIView):
-    queryset = PullRequestMetrics.objects.filter()
+    queryset = Repository.objects.filter()
+    if queryset.exists():
+        repository = queryset.first()  # Retrieve the first Repository object from the queryset
+        GHParser.calculate_average_request_time(repository.name, 'PullRequestEvent')

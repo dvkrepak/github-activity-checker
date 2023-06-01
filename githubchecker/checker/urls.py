@@ -4,5 +4,5 @@ from .views import PullRequestMetricsAPIView
 
 
 urlpatterns = [
-    path('metrics/pull-request/<int:repository_id>', PullRequestMetricsAPIView.as_view()),
+    path('metrics/pull-request/<int:repo_id>', PullRequestMetricsAPIView.as_view()),
 ]
