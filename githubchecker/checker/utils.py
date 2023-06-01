@@ -3,7 +3,7 @@ from enum import Enum
 from datetime import timedelta, datetime
 
 from .models import PullRequestMetrics, Repository, Event, EventType
-from django.db.models import Func, FloatField, DateTimeField, Count
+from django.db.models import Count
 from django.utils import timezone
 
 import requests
@@ -34,7 +34,8 @@ class GHParser:
 
         if len(events) < 2:
             PullRequestMetrics.objects.create(gh_repo_id=repository, respond='0').save()
-            return 0  # Difference between one(1)/zero(0) datetime(-s) is zero(0)
+            # Difference between one(1)/zero(0) datetime(-s) is zero(0)
+            return '0 days, 00:00:00'
 
         total_difference = timedelta()
         for index in range(1, len(events)):
@@ -47,7 +48,7 @@ class GHParser:
         hours, remainder = divmod(average_difference.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
 
-        average_difference_str = f"{days} days, {hours:02}:{minutes:02}:{seconds:02}"
+        average_difference_str = f'{days} days, {hours:02}:{minutes:02}:{seconds:02}'
         PullRequestMetrics.objects.create(gh_repo_id=repository, respond=average_difference_str).save()
 
         return average_difference_str

@@ -1,3 +1,5 @@
+import re
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -37,21 +39,21 @@ class Event(models.Model):
         verbose_name_plural = 'Events'
 
 
-class BasicMetrics(models.Model):
+class PullRequestMetrics(models.Model):
     gh_repo_id = models.ForeignKey(Repository, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return 'Basic metric'
-
-    class Meta:
-        verbose_name = 'Basic Metric'
-        verbose_name_plural = 'Basic Metrics'
-
-
-class PullRequestMetrics(BasicMetrics):
     # Char representation of date
-    # For example: `0 days, 02:01:18`
+    # For example: `0 days, 02:01:18
     respond = models.CharField(max_length=50, default=None)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        if 'respond' not in exclude:
+            self.validate_respond_structure()
+
+    def validate_respond_structure(self):
+        pattern = r'^\d+ days, \d{2}:\d{2}:\d{2}$'
+        if not re.match(pattern, self.respond):
+            raise ValidationError('Invalid respond structure.\nUsage: <int> days, <int:2>:<int:2>:<int:2>')
 
     def __str__(self):
         return f'Pull request metric about repo {self.gh_repo_id} = {self.respond}'
