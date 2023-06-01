@@ -21,14 +21,17 @@ def main():
 
     # Put here your token
     TOKEN = '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'
+    ACTIVE_PARSER = True  # Change if you (don't) want to activate parser
 
+    # Parser
     # Change this if you want to parse faster/slower
     # However, do not forget about GitHub requests' limitation
     AMOUNT_OF_REQUEST_PER_MINUT = 5
 
-    while True:
+    while ACTIVE_PARSER:
         GHParser.parse(TOKEN)
         time.sleep(60 // AMOUNT_OF_REQUEST_PER_MINUT)
+    # End
 
 
 if __name__ == '__main__':
