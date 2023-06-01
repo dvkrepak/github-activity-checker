@@ -2,9 +2,8 @@ from django.db import models
 
 
 class Repository(models.Model):
-    name = models.CharField(max_length=255, default=None)
-    repo_id = models.BigIntegerField(unique=True, default=None)
-    events = models.ForeignKey('Event', on_delete=models.PROTECT, default=None)
+    name = models.CharField(max_length=255)
+    gh_repo_id = models.BigIntegerField(unique=True)
 
     def __str__(self):
         return self.name
@@ -14,20 +13,20 @@ class Repository(models.Model):
         verbose_name_plural = 'Repositories'
 
 
+class EventType(models.Model):
+    event_type = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.event_type
+
+    class Meta:
+        verbose_name = 'Event Type'
+        verbose_name_plural = 'Event Types'
+
+
 class Event(models.Model):
-    # Possible events
-    WATCH_EVENT = 'WatchEvent'
-    PULL_REQUEST_EVENT = 'PullRequestEvent'
-    ISSUES_EVENT = 'IssuesEvent'
-    # End
-
-    EVENT_CHOICES = [
-        (WATCH_EVENT, 'WatchEvent'),
-        (PULL_REQUEST_EVENT, 'PullRequestEvent'),
-        (ISSUES_EVENT, 'IssuesEvent')
-    ]
-
-    event_type = models.CharField(max_length=20, choices=EVENT_CHOICES)
+    event_type = models.ForeignKey(EventType, on_delete=models.PROTECT)
+    repo = models.ForeignKey(Repository, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -39,7 +38,7 @@ class Event(models.Model):
 
 
 class BasicMetrics(models.Model):
-    repository_id = models.ForeignKey(Repository, on_delete=models.PROTECT, null=False, default=None)
+    gh_repo_id = models.ForeignKey(Repository, on_delete=models.PROTECT)
 
     def __str__(self):
         return 'Basic metric'
@@ -50,10 +49,12 @@ class BasicMetrics(models.Model):
 
 
 class PullRequestMetrics(BasicMetrics):
-    respond = models.FloatField(default=None)
+    # Char representation of date
+    # For example: `0 days, 02:01:18`
+    respond = models.CharField(max_length=50, default=None)
 
     def __str__(self):
-        return f'Pull request metric about repo n.{self.repository_id} = {self.respond}'
+        return f'Pull request metric about repo {self.gh_repo_id} = {self.respond}'
 
     class Meta:
         verbose_name = 'Pull Request Metric'
