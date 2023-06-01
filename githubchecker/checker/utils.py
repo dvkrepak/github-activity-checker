@@ -1,13 +1,13 @@
 import datetime
+import requests
+import json
+
 from enum import Enum
 from datetime import timedelta, datetime
-
-from .models import PullRequestMetrics, Repository, Event, EventType
 from django.db.models import Count
 from django.utils import timezone
 
-import requests
-import json
+from .models import PullRequestMetrics, Repository, Event, EventType
 
 
 class EventTypes(Enum):

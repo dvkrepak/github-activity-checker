@@ -1,9 +1,8 @@
 from rest_framework import generics
 from django.http import JsonResponse
-from django.core import serializers
 
-from .models import Repository, PullRequestMetrics
-from .serializers import RepositorySerializer, MetricsSerializer
+from .models import Repository
+from .serializers import RepositorySerializer
 from .utils import GHParser
 
 
