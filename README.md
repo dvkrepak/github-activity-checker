@@ -43,15 +43,15 @@ python3 -m venv venv && source venv/bin/activate
 ```
 4. Install all the required packages from requirements.txt:
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 5. Apply database migrations:
 ```
-python manage.py migrate
+python3 manage.py migrate
 ```
 6. [Optional] Create a superuser:
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 7. Launch the project:
 ```
