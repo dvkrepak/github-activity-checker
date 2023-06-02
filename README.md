@@ -8,8 +8,10 @@ This is a GitHub Analyzer project developed by **<u> Denis Krepak</u>**.
 - [**<u> Deployment on local machine </u>**](#deployment-on-local-machine-a-namedeployment-locala)
 - [**<u> Accesable Endpoints </u>**](#accesable-endpoints-a-nameendpointsa)
 - [**<u> Examples of Usage </u>**](#examples-of-usage-a-nameexamples-usagea)
+- [**<u> C4 model </u>**](#c4-model-a-namec4-modela)
 ## **Project Description** <a name="project-description"></a>
 A web service that enables you to monitor activities (events) occurring on GitHub.
+https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp
 ## **Features:**
 - Calculates the average time between pull requests.
 - Retrieves the total number of events grouped by event type within a specified time offset[1].
@@ -79,3 +81,8 @@ The project will be accessible at **http://127.0.0.1:8000/**.
 * Endpoint: **<u>  /metrics/events_visualization/<offset> </u>**.
 * Example: **<u>  /metrics/events_visualization/10 </u>**.
 * Description: Replace `<offset>` with the desired time offset (in minutes) to visualize the event metrics for that time range.
+## C4 model <a name="c4-model"></a>
+**<u> [C4 model using IcePanel](https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp) </u>**
+**<u> [C4 model as PDF](https://tan-josselyn-80.tiiny.site/) </u>**
+<img align="left" src="https://i.imgur.com/ICcNx2z.jpg" alt="GitHub Logo" width="328" height="600">
+
