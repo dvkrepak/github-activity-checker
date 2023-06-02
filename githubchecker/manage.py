@@ -19,11 +19,10 @@ def main():
     from checker.utils import GHParser
     import time
 
-    # Put here your token
-    TOKEN = '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'
-    ACTIVE_PARSER = True  # Change if you (don't) want to activate parser
+    # Parser start
+    TOKEN = '<TOKEN>'  # Put here your token
+    ACTIVE_PARSER = False  # Change if you (don't) want to activate parser
 
-    # Parser
     # Change this if you want to parse faster/slower
     # However, do not forget about GitHub requests' limitation
     AMOUNT_OF_REQUEST_PER_MINUT = 5
