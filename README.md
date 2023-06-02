@@ -11,7 +11,6 @@ This is a GitHub Analyzer project developed by **<u> Denis Krepak</u>**.
 - [**<u> C4 model </u>**](#c4-model-a-namec4-modela)
 ## **Project Description** <a name="project-description"></a>
 A web service that enables you to monitor activities (events) occurring on GitHub.
-https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp
 ## **Features:**
 - Calculates the average time between pull requests.
 - Retrieves the total number of events grouped by event type within a specified time offset[1].
@@ -21,19 +20,19 @@ https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp
 
 ## **Used Technologies** <a name="used-technologies"></a>
 **[Events GitHub API](https://api.github.com/events)**: Event streaming from the GitHub API.  
-**[Django](https://docs.djangoproject.com/en/4.2/)**:  Framework for creating the web application.
-**[Django REST framework](https://www.django-rest-framework.org/)**: Library for providing endpoints for the web service.
-**[PostgreSQL](https://www.postgresql.org/docs/)**: Relational database management system used for data storage.
+**[Django](https://docs.djangoproject.com/en/4.2/)**:  Framework for creating the web application.  
+**[Django REST framework](https://www.django-rest-framework.org/)**: Library for providing endpoints for the web service.  
+**[PostgreSQL](https://www.postgresql.org/docs/)**: Relational database management system used for data storage.  
 **[Matplotlib](https://matplotlib.org/stable/index.html)**: Library for visualizing statistics.
 ## Deployment on Local Machine <a name="deployment-local"></a>
 1. Run the following commands to create the database:
 ```
 psql -U postgres;
-DROP DATABASE IF EXISTS analyzerdb;
-CREATE DATABASE analyzerdb;
+DROP DATABASE IF EXISTS checkerdb;
+CREATE DATABASE checkerdb;
 ```
 The second line prevents the error `ERROR: database "checkerdb" already exists`, 
-and the third line creates a database named `analyzerdb`.
+and the third line creates a database named `checkerdb`.
 2. Clone the repository and change to the project directory:
 ```
 git clone git@github.com:dvkrepak/github-activity-checker.git github-checker && cd github-checker
@@ -66,21 +65,21 @@ The project will be accessible at **http://127.0.0.1:8000/**.
 - **Events Metrics Visualization**: Accessible at **<u>  http://127.0.0.1:8000/metrics/events_visualization/<int:repository_id> </u>**.
 ## Examples of Usage <a name="examples-usage"></a>
 1. Retrieving Pull Request Metrics:
-* Endpoint: **<u>  /metrics/pull-request/<repository_id> </u>**.
+* Endpoint: **<u>  /metrics/pull-request/int:repository_id </u>**.
 * Example: **<u> /metrics/pull-request/123 </u>**.
-* Description: Replace `<repository_id>` with the GitHub ID of the desired repository to get the pull request metrics for that repository.
+* Description: Replace `int:repository_id` with the GitHub ID of the desired repository to get the pull request metrics for that repository.
 
 2. Getting Event Metrics:
 
-* Endpoint: **<u>  /metrics/events/<offset> </u>**.
+* Endpoint: **<u>  /metrics/events/int:offset </u>**.
 * Example: **<u>  /metrics/events/10 </u>**.
-* Description: Replace `<offset>` with the desired time offset (in minutes) to get the event metrics for that time range.
+* Description: Replace `int:offset` with the desired time offset (in minutes) to get the event metrics for that time range.
 
 3. Visualizing Event Metrics:
 
-* Endpoint: **<u>  /metrics/events_visualization/<offset> </u>**.
+* Endpoint: **<u>  /metrics/events_visualization/int:offset </u>**.
 * Example: **<u>  /metrics/events_visualization/10 </u>**.
-* Description: Replace `<offset>` with the desired time offset (in minutes) to visualize the event metrics for that time range.
+* Description: Replace `int:offset` with the desired time offset (in minutes) to visualize the event metrics for that time range.
 ## C4 model <a name="c4-model"></a>
 **<u> [C4 model using IcePanel](https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp) </u>**
 
