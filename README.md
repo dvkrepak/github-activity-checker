@@ -10,7 +10,7 @@ This is a GitHub Analyzer project developed by **<u> Denis Krepak</u>**.
 - [**<u> Examples of Usage </u>**](#examples-of-usage-a-nameexamples-usagea)
 - [**<u> C4 model </u>**](#c4-model-a-namec4-modela)
 ## **Project Description** <a name="project-description"></a>
-A web service that enables you to monitor activities (events) occurring on GitHub.
+A web service that enables you to analyze activities (events) occurring on GitHub.
 ## **Features:**
 - Calculates the average time between pull requests.
 - Retrieves the total number of events grouped by event type within a specified time offset[1].
@@ -45,17 +45,27 @@ pip3 install -r requirements.txt
 ```
 5. Apply database migrations:
 ```
-python3 manage.py migrate
+cd githubchecker && python3 manage.py makemigrations && python3 manage.py migrate
 ```
 6. [Optional] Create a superuser:
 ```
 python3 manage.py createsuperuser
 ```
-7. Launch the project:
+7. Set parser and token settings in manage.py  
 ```
-python manage.py runserver
+To configure the parser and token settings in your `manage.py` file, follow these steps:
+
+1. Put your GitHub token into the variable named `TOKEN` (line 23).
+2. [Optional] Set the parser to be active by setting the variable named `ACTIVE_PARSER` to `True` (line 24).
+3. [Optional] Adjust the number of requests by modifying the variable named `AMOUNT_OF_REQUEST_PER_MINUTE` (line 28).
+```
+8. Launch the project:
+```
+python3 manage.py runserver
 ```
 The project will be accessible at **http://127.0.0.1:8000/**.
+
+* **Note:** The parser may not be active on your platform after launching. You might need to activate it by running the `manage.py` file.
 ## Accesable Endpoints <a name="endpoints"></a>
 - **Admin Page**: Accessible at **<u> http://127.0.0.1:8000/admin/ </u>**. Requires superuser credentials.
 - **Pull Request Metrics**: Accessible at **<u>  http://127.0.0.1:8000/metrics/pull-request/<int:repository_id> </u>**.
