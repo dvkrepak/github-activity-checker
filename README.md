@@ -84,7 +84,8 @@ The project will be accessible at **http://127.0.0.1:8000/**.
 ## C4 model <a name="c4-model"></a>
 **<u> [C4 model using IcePanel](https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp) </u>**
 
-**<u> [C4 model as PDF](https://tan-josselyn-80.tiiny.site/) </u>**
+**<u> [C4 model as PDF](https://c4model-github-parser.tiiny.site/) </u>**
 
-<img src="https://i.imgur.com/ICcNx2z.jpg" alt="GitHub Logo" width="328" height="600">
+<img src="https://i.imgur.com/cGjF2SL.png" alt="GitHub Logo" width="328" height="600"> // Black
+<img src="https://i.imgur.com/dbREmk7.png" alt="GitHub Logo" width="328" height="600"> // White
 
