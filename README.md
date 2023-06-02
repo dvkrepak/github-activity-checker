@@ -83,6 +83,8 @@ The project will be accessible at **http://127.0.0.1:8000/**.
 * Description: Replace `<offset>` with the desired time offset (in minutes) to visualize the event metrics for that time range.
 ## C4 model <a name="c4-model"></a>
 **<u> [C4 model using IcePanel](https://s.icepanel.io/ZoOSKTSb1gNrOi/9idp) </u>**
+
 **<u> [C4 model as PDF](https://tan-josselyn-80.tiiny.site/) </u>**
-<img align="left" src="https://i.imgur.com/ICcNx2z.jpg" alt="GitHub Logo" width="328" height="600">
+
+<img src="https://i.imgur.com/ICcNx2z.jpg" alt="GitHub Logo" width="328" height="600">
 
