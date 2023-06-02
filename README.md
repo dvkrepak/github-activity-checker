@@ -32,7 +32,7 @@ DROP DATABASE IF EXISTS checkerdb;
 CREATE DATABASE checkerdb;
 ```
 The second line prevents the error `ERROR: database "checkerdb" already exists`, 
-and the third line creates a database named `checkerdb`.
+and the third line creates a database named `checkerdb`.    
 2. Clone the repository and change to the project directory:
 ```
 git clone git@github.com:dvkrepak/github-activity-checker.git github-checker && cd github-checker
