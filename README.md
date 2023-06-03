@@ -23,7 +23,8 @@ A web service that enables you to analyze activities (events) occurring on GitHu
 **[Django](https://docs.djangoproject.com/en/4.2/)**:  Framework for creating the web application.  
 **[Django REST framework](https://www.django-rest-framework.org/)**: Library for providing endpoints for the web service.  
 **[PostgreSQL](https://www.postgresql.org/docs/)**: Relational database management system used for data storage.  
-**[Matplotlib](https://matplotlib.org/stable/index.html)**: Library for visualizing statistics.
+**[Matplotlib](https://matplotlib.org/stable/index.html)**: Library for visualizing statistics.  
+**[Numpy](https://matplotlib.org/stable/index.html)**: Library for calculating the average time difference between events.
 ## Deployment on Local Machine <a name="deployment-local"></a>
 1. Run the following commands to create the database:
 ```

@@ -5,6 +5,7 @@ from io import BytesIO
 import json
 import matplotlib
 import requests
+import numpy as np
 
 from django.db.models import Count
 from django.utils import timezone
@@ -176,12 +177,19 @@ class Analyzer:
         :param events: A list of events sorted by their creation date and time.
         :return: The average time difference between events as a timedelta object.
         """
-        total_difference = timedelta()
-        for index in range(1, len(events)):
-            difference = events[index].created_at - events[index - 1].created_at
-            total_difference += difference
+        datetime_list = [event.created_at for event in events]
 
-        return total_difference / (len(events) - 1)
+        # Convert the list into a NumPy array
+        datetime_array = np.array(datetime_list)
+        float_time_array = np.array([dt.timestamp() for dt in datetime_array])
+
+        # Calculate the differences between each pair of consecutive times
+        diffs = np.diff(float_time_array)
+        average_diff = np.mean(diffs)
+
+        # Convert the average difference from seconds to a timedelta object
+        average_timedelta = timedelta(seconds=float(average_diff))
+        return average_timedelta
 
     @staticmethod
     def __format_timedelta(timedelta_obj):
