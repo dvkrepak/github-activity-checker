@@ -52,7 +52,7 @@ cd githubchecker && python3 manage.py makemigrations && python3 manage.py migrat
 ```
 python3 manage.py createsuperuser
 ```
-7. Set parser and token settings in manage.py  
+7. Set parser and token settings in manage.py:
 ```
 To configure the parser and token settings in your `manage.py` file, follow these steps:
 
